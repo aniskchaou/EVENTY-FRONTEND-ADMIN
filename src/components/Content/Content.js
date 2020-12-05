@@ -11,7 +11,7 @@ import Dashbord from '../DashBoard/DashBoard';
 import User from '../User/User';
 const Content = () => (
   <div className="col-md-12">
-    <Router>
+    
         <div>
         <Route exact path="/" component={Dashbord} />
           <Route exact path="/event" component={Eventt} />
@@ -23,7 +23,7 @@ const Content = () => (
          
           
         </div>
-      </Router>
+      
    
 </div>
 );
