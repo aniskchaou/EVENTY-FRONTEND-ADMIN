@@ -14,6 +14,7 @@ const Content = () => (
     
         <div>
         <Route exact path="/" component={Dashbord} />
+        <Route exact path="/dashboard" component={Dashbord} />
           <Route exact path="/event" component={Eventt} />
           <Route exact path="/reservation" component={Reservation} />
           <Route exact path="/category" component={Category} />

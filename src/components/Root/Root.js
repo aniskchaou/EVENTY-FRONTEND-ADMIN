@@ -21,7 +21,7 @@ class Root extends React.Component {
         
         
         <div id="right-panel" className="right-panel">
-          <Path/>
+        
 
           <div className="content">
             <div className="animated fadeIn">
