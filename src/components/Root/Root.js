@@ -6,13 +6,21 @@ import Content from '../Content/Content';
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import Footer from '../Footer/Footer';
 import Path from '../Path/Path';
-
+import Login from '../Login/Login';
+import { useLocation } from 'react-router-dom'
 class Root extends React.Component {
+   
+   
   constructor(props) {
     super(props);
     this.state = {};
   }
   render() {
+    
+    
+    if (window.location.pathname=="/"){
+      return (<Login/>);
+    }
     return (
       <div>
         <Router>

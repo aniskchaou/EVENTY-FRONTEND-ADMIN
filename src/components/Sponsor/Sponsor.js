@@ -4,7 +4,7 @@ import './Sponsor.css';
 
 const Sponsor = () => (
   <div className="Sponsor">
-    Sponsor Component
+    en cours de développement
   </div>
 );
 

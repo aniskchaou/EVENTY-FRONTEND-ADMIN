@@ -9,11 +9,12 @@ import Sponsor from '../Sponsor/Sponsor';
 import Configuration from '../Configuration/Configuration';
 import Dashbord from '../DashBoard/DashBoard';
 import User from '../User/User';
+import Login from '../Login/Login';
 const Content = () => (
   <div className="col-md-12">
     
         <div>
-        <Route exact path="/" component={Dashbord} />
+        <Route exact path="/" component={Login} />
         <Route exact path="/dashboard" component={Dashbord} />
           <Route exact path="/event" component={Eventt} />
           <Route exact path="/reservation" component={Reservation} />
