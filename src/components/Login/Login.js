@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
-
+import {  Link } from "react-router-dom"
 
 const Login = () => (
   <div className="login-content">
@@ -25,7 +25,7 @@ const Login = () => (
 
 
         </div>
-        <button type="submit" className="btn btn-success btn-flat m-b-30 m-t-30">Connexion</button>
+        <Link to="/dashboard" type="button" className="btn btn-success btn-flat m-b-30 m-t-30">Connexion</Link>
 
 
       </form>
