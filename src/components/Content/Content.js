@@ -14,7 +14,7 @@ const Content = () => (
   <div className="col-md-12">
     
         <div>
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={Dashbord} />
         <Route exact path="/dashboard" component={Dashbord} />
           <Route exact path="/event" component={Eventt} />
           <Route exact path="/reservation" component={Reservation} />
