@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Content.css';
-import Eventt from  '../Eventt/Eventt';
-import Reservation from '../Reservation/Reservation';
+
 import { BrowserRouter as Router, Route } from "react-router-dom"
-import Category from '../Category/Category';
-import Sponsor from '../Sponsor/Sponsor';
-import Configuration from '../Configuration/Configuration';
-import Dashbord from '../DashBoard/DashBoard';
-import User from '../User/User';
-import Login from '../Login/Login';
+
+import Configuration from '../../modules/shared/Configuration/Configuration';
+import Dashbord from '../../modules/shared/DashBoard/DashBoard';
+import Eventt from './../../modules/event/Eventt/Eventt';
+import Reservation from './../../modules/reservation/Reservation/Reservation';
+import Category from './../../modules/category/Category/Category';
+import User from './../../modules/user/User/User';
+import Sponsor from './../../modules/Sponsor/Sponsor';
+
+
 const Content = () => (
   <div className="col-md-12">
     

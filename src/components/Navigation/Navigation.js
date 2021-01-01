@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Link } from "react-router-dom"
+import {   NavLink } from "react-router-dom"
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -14,23 +14,23 @@ class Navigation extends React.Component {
 
         <div id="main-menu" className="main-menu collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <li className="active">
-              <Link to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </Link>
+            <li >
+              < NavLink activeClassName="activeLink" to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </ NavLink>
             </li>
             <li>
-              <Link to="/category"><i className="menu-icon fa fa-laptop"></i>Categories </Link>
+              < NavLink activeClassName="activeLink" to="/category"><i className="menu-icon fa fa-bars"></i>Categories </ NavLink>
             </li>
             <li>
-              <Link to="/reservation"><i className="menu-icon fa fa-laptop"></i>Réservations </Link>
+              < NavLink activeClassName="activeLink" to="/reservation"><i className="menu-icon fa fa-check"></i>Réservations </ NavLink>
             </li>
             <li>
-              <Link to="/user"><i className="menu-icon fa fa-laptop"></i>Utilisateurs </Link>
+              < NavLink activeClassName="activeLink" to="/user"><i className="menu-icon fa fa-users"></i>Utilisateurs </ NavLink>
             </li>
             <li>
-              <Link to="/sponsor"><i className="menu-icon fa fa-laptop"></i>Sponseurs </Link>
+              <NavLink activeClassName="activeLink" to="/sponsor"><i className="menu-icon fa fa-crown"></i>Sponseurs </ NavLink>
             </li>
             <li>
-              <Link to="/configuration"><i className="menu-icon fa fa-laptop"></i>Paramètres </Link>
+              < NavLink activeClassName="activeLink" to="/configuration"><i className="menu-icon fa fa-cog"></i>Paramètres </ NavLink>
             </li>
           </ul>
         </div>

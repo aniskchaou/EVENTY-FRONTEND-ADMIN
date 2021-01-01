@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './Login.css';
 import {  Link } from "react-router-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom"
-import Dashbord from '../DashBoard/DashBoard';
-import Root from '../Root/Root';
+import Dashbord from '../shared/DashBoard/DashBoard';
+import Root from '../../components/Root/Root';
 import { useHistory } from "react-router"
 import { Redirect } from 'react-router'
 
