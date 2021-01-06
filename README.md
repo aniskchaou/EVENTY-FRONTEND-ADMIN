@@ -1,7 +1,7 @@
 # Eventy
 Eventy is a web application that allows you to manage the process of organizing different types of events.
 
-## Information:
+## Informations:
 - Status : in development
 - Lastest version : 1.0
 - Sector: service
