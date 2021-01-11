@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './Reservation.css';
+import { LoadJS } from './../../../components/init';
 
 const deleteTask=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Reservation = () => (
+const Reservation = ()  => {
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+   
+  }, []);
+  
+  return(
   <div className="card">
     <div className="card-header">
       <strong className="card-title">Résévations</strong>
@@ -41,6 +49,16 @@ const Reservation = () => (
           </tr>
 
         </tbody>
+        <tfoot> <tr>
+            <th>Utilisateur</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Message</th>
+            <th>Nom evenement</th>
+            <th>Date</th>
+            <th>Nombre de membre</th>
+            <th>Actions</th>
+          </tr></tfoot>
       </table>
       <button  type="button" data-toggle="modal" data-target="#addReservation" className="btn btn-success btn-sm">Ajouter</button>
 
@@ -105,7 +123,7 @@ const Reservation = () => (
       </div>
     </div>
   </div>
-);
+)};
 
 Reservation.propTypes = {};
 

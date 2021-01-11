@@ -27,7 +27,7 @@ class Navigation extends React.Component {
               < NavLink activeClassName="activeLink" to="/user"><i className="menu-icon fa fa-users"></i>Utilisateurs </ NavLink>
             </li>
             <li>
-              <NavLink activeClassName="activeLink" to="/sponsor"><i className="menu-icon fa fa-crown"></i>Sponseurs </ NavLink>
+              <NavLink activeClassName="activeLink" to="/configuration"><i className="menu-icon fa fa-crown"></i>Sponseurs </ NavLink>
             </li>
             <li>
               < NavLink activeClassName="activeLink" to="/configuration"><i className="menu-icon fa fa-cog"></i>Paramètres </ NavLink>

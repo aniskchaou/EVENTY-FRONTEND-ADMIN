@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Category.css';
 import AddCategory from './../../../components/AddCategory/AddCategory';
 import EditCategory from './../../../components/EditCategory/EditCategory';
+import { LoadJS } from './../../../components/init';
 const deleteTask=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Category = () => (
+const Category = () => {
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+   
+  }, []);
+  
+  return(
   <div className="card">
     <div className="card-header">
       <strong className="card-title">Catégories</strong>
@@ -32,6 +40,11 @@ const Category = () => (
           </tr>
 
         </tbody>
+        <tfoot><tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr></tfoot>
         
       </table>
       <button data-toggle="modal" data-target="#addCategory" type="button" className="btn btn-success btn-sm">Ajouter</button>
@@ -98,7 +111,7 @@ const Category = () => (
     </div>
     
   </div>
-);
+)};
 
 Category.propTypes = {};
 

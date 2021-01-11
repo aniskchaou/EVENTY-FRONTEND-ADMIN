@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './DashBoard.css';
+import { drawChart } from './../../../components/chart';
+import * as Chart from 'chart.js';
 
-const DashBoard = () => (
-  <div className="col-md-12">
-    <div className="card">
-      <div className="card-header">
-        <strong className="card-title">Tableau de bord</strong>
-      </div>
-      <div className="card-body">
+
+const DashBoard = () => {
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    drawChart()
+     
+  }, []);
+
+  
+
+      return(
         <div className="row">
           <div className="col-lg-3 col-md-6">
             <div className="card">
@@ -89,11 +95,40 @@ const DashBoard = () => (
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+
+
+           
+          <div className="col-md-12">
+          <div className="card">
+              <div className="card-body">
+         
+                                <h4 className="mb-3">Evénements</h4>
+                                <canvas id="team-chart" height="225"  width="450" className="event-chart chartjs-render-monitor"></canvas>
+           </div>
+           </div>
+           </div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+     
+)};
 
 DashBoard.propTypes = {};
 

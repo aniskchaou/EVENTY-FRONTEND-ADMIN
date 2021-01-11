@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './Eventt.css';
 import AddEvent from './../../../components/AddEvent/AddEvent';
 import EditEvent from './../../../components/EditEvent/EditEvent';
+import { LoadJS } from './../../../components/init';
 
 const deleteTask=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Eventt = () => (
+const Eventt = () => {
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+   
+  }, []);
+  
+  return(
   <div className="card">
     <div className="card-header">
       <strong className="card-title">Evenements</strong>
@@ -38,6 +46,14 @@ const Eventt = () => (
           </tr>
 
         </tbody>
+        <tfoot><tr>
+            <th>Categorie</th>
+            <th>Auteur</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>statut</th>
+            <th>Actions</th>
+          </tr></tfoot>
       </table>
       <button  type="button" className="btn btn-success btn-sm">Ajouter</button>
 
@@ -102,7 +118,7 @@ const Eventt = () => (
       </div>
     </div>
   </div>
-);
+)};
 
 Eventt.propTypes = {};
 
