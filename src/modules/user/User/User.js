@@ -32,9 +32,27 @@ const User = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Tiger Nixon</td>
-                        <td>tiger@gmail.com</td>
-                        <td>355355353</td>
+                        <td>Nathalie David</td>
+                        <td>NathalieDavid@armyspy.com</td>
+                        <td>02.08.57.72.09</td>
+                        <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+              <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+
+                    </tr>
+                    <tr>
+                        <td>Moore Therrien</td>
+                        <td>MooreTherrien@teleworm.us</td>
+                        <td>04.08.67.54.099</td>
+                        <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+              <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+
+                    </tr>
+                    <tr>
+                        <td>Adélaïde Brisette</td>
+                        <td>AdelaideBrisette@armyspy.com</td>
+                        <td>04.90.74.53.53</td>
                         <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
               <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
               <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>

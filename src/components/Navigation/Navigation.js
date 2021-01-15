@@ -18,6 +18,9 @@ class Navigation extends React.Component {
               < NavLink activeClassName="activeLink" to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </ NavLink>
             </li>
             <li>
+              < NavLink activeClassName="activeLink" to="/event"><i className="menu-icon fa fa-calendar-alt"></i>Evenement </ NavLink>
+            </li>
+            <li>
               < NavLink activeClassName="activeLink" to="/category"><i className="menu-icon fa fa-bars"></i>Categories </ NavLink>
             </li>
             <li>

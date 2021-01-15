@@ -30,10 +30,25 @@ const Category = () => {
           </tr>
         </thead>
         <tbody>
-       
+
           <tr>
-            <td>sport</td>
-            <td>match foot</td>
+            <td>Séminaire</td>
+            <td>Séminaire</td>
+            <td><button type="button" data-toggle="modal" data-target="#viewCategory" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+              <button type="button" data-toggle="modal" data-target="#editCategory"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+          </tr>
+          <tr>
+            <td>Conférence et congrès</td>
+            <td>Conférence et congrès</td>
+            <td><button type="button" data-toggle="modal" data-target="#viewCategory" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+              <button type="button" data-toggle="modal" data-target="#editCategory"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+          </tr>
+
+          <tr>
+            <td>Lancement de produit</td>
+            <td>Lancement de produit</td>
             <td><button type="button" data-toggle="modal" data-target="#viewCategory" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
               <button type="button" data-toggle="modal" data-target="#editCategory"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
               <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>

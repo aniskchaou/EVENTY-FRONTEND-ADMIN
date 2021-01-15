@@ -28,18 +28,29 @@ const Eventt = () => {
             <th>Categorie</th>
             <th>Auteur</th>
             <th>Nom</th>
-            <th>Description</th>
+            
             <th>statut</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>culture</td>
-            <td>Anis</td>
-            <td>reunion</td>
-            <td>qdf</td>
-            <td>ouvert</td>
+            <td>Culture</td>
+            <td>Nathalie David</td>
+            <td>La Fête du Citron</td>
+            
+            <td className="badge badge-success">Ouvert</td>
+            <td><button type="button" data-toggle="modal" data-target="#viewTask" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+              <button type="button" data-toggle="modal" data-target="#editTask"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+          </tr>
+
+          <tr>
+            <td>Culture</td>
+            <td>Saville Bussière</td>
+            <td>La Saint-Vincent Tournante</td>
+            
+            <td className="badge badge-danger">Fermé</td>
             <td><button type="button" data-toggle="modal" data-target="#viewTask" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
               <button type="button" data-toggle="modal" data-target="#editTask"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
               <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
@@ -50,12 +61,11 @@ const Eventt = () => {
             <th>Categorie</th>
             <th>Auteur</th>
             <th>Nom</th>
-            <th>Description</th>
             <th>statut</th>
             <th>Actions</th>
           </tr></tfoot>
       </table>
-      <button  type="button" className="btn btn-success btn-sm">Ajouter</button>
+      <button  type="button" data-toggle="modal" data-target="#addTask" className="btn btn-success btn-sm">Ajouter</button>
 
       <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -71,7 +81,7 @@ const Eventt = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -91,7 +101,7 @@ const Eventt = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -111,7 +121,7 @@ const Eventt = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
