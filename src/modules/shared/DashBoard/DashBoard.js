@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './DashBoard.css';
-import { drawChart } from './../../../components/chart';
-import * as Chart from 'chart.js';
+//import { drawChart } from './../../../components/chart';
 import Eventt from './../../event/Eventt/Eventt';
+import { drawChart } from '../../../libraries/chart/chart';
 
 
 const DashBoard = () => {

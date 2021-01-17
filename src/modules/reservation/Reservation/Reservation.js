@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
+import { LoadJS } from '../../../libraries/datatables/datatables';
 
 import './Reservation.css';
-import { LoadJS } from './../../../components/init';
+
 
 const deleteTask=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
@@ -87,8 +88,7 @@ const Reservation = ()  => {
             <th>Actions</th>
           </tr></tfoot>
       </table>
-      <button  type="button" data-toggle="modal" data-target="#addReservation" className="btn btn-success btn-sm">Ajouter</button>
-
+     
       <div class="modal fade" id="addReservation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
@@ -103,7 +103,7 @@ const Reservation = ()  => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@ const Reservation = ()  => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -143,7 +143,7 @@ const Reservation = ()  => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>

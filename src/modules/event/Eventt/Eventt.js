@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
 import './Eventt.css';
-import AddEvent from './../../../components/AddEvent/AddEvent';
-import EditEvent from './../../../components/EditEvent/EditEvent';
-import { LoadJS } from './../../../components/init';
+import AddEvent from './../AddEvent/AddEvent';
+import EditEvent from './../EditEvent/EditEvent';
+import { LoadJS } from '../../../libraries/datatables/datatables';
+
 
 const deleteTask=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")

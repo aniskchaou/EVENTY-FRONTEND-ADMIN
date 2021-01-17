@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Category.css';
-import AddCategory from './../../../components/AddCategory/AddCategory';
-import EditCategory from './../../../components/EditCategory/EditCategory';
-import { LoadJS } from './../../../components/init';
+import AddCategory from './../AddCategory/AddCategory';
+import EditCategory from './../EditCategory/EditCategory';
+import { LoadJS } from '../../../libraries/datatables/datatables';
 const deleteTask=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
@@ -78,7 +78,7 @@ const Category = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ const Category = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ const Category = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>

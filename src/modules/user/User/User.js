@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './User.css';
-import AddUser from './../../../components/AddUser/AddUser';
-import { LoadJS } from './../../../components/init';
+import AddUser from './../AddUser/AddUser';
+import { LoadJS } from '../../../libraries/datatables/datatables';
+//import { LoadJS } from './../../../components/init';
 const deleteTask=()=>{
     return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
  }
@@ -84,7 +85,7 @@ const User = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -104,7 +105,7 @@ const User = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>
@@ -124,7 +125,7 @@ const User = () => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>
           </div>
         </div>

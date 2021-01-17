@@ -4,13 +4,13 @@ import './Content.css';
 
 import { BrowserRouter as Router, Route } from "react-router-dom"
 
-import Configuration from '../../modules/shared/Configuration/Configuration';
-import Dashbord from '../../modules/shared/DashBoard/DashBoard';
-import Eventt from './../../modules/event/Eventt/Eventt';
-import Reservation from './../../modules/reservation/Reservation/Reservation';
-import Category from './../../modules/category/Category/Category';
-import User from './../../modules/user/User/User';
-import Sponsor from './../../modules/Sponsor/Sponsor';
+import Configuration from '../../../modules/shared/Configuration/Configuration';
+import Dashbord from '../../../modules/shared/DashBoard/DashBoard';
+import Eventt from '../../../modules/event/Eventt/Eventt';
+import Reservation from '../../../modules/reservation/Reservation/Reservation';
+import Category from '../../../modules/category/Category/Category';
+import User from '../../../modules/user/User/User';
+import Sponsor from '../../../modules/sponsors/Sponsor/Sponsor';
 
 
 const Content = () => (
