@@ -1,138 +1,221 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './User.css';
-import AddUser from './../AddUser/AddUser';
 import { LoadJS } from '../../../libraries/datatables/datatables';
-//import { LoadJS } from './../../../components/init';
-const deleteTask=()=>{
-    return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
- }
+import AddUser from '../AddUser/AddUser';
+import useForceUpdate from 'use-force-update';
+import showMessage from '../../../libraries/messages/messages';
+import userMessage from '../../../main/messages/userMessage';
+import UserTestService from '../../../main/mocks/UserTestService';
+import HTTPService from '../../../main/services/HTTPService';
+
+
+const deleteTask = () => {
+  return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
+}
 
 const User = () => {
+
+  const [users, setUsers] = useState([]);
+  const [updatedItem, setUpdatedItem] = useState({});
+  const forceUpdate = useForceUpdate();
+
+
   useEffect(() => {
-    // Runs ONCE after initial rendering
     LoadJS()
-   
+    retrieveUsers()
   }, []);
-  
-  return(
+
+
+  const getAll = () => {
+    HTTPService.getAll()
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const removeOne = (data) => {
+    HTTPService.remove(data)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
+  }
+
+
+
+  const retrieveUsers = () => {
+    var users = UserTestService.getAll();
+    setUsers(users);
+  };
+
+  const resfresh = () => {
+    retrieveUsers()
+    forceUpdate()
+  }
+
+  const remove = (e, data) => {
+    e.preventDefault();
+    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    if (r) {
+      showMessage('Confirmation', userMessage.delete, 'success')
+      UserTestService.remove(data)
+      //removeOne(data)
+      resfresh()
+    }
+
+  }
+
+  const update = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
+    resfresh()
+  }
+
+  return (
     <div className="card">
-        <div className="card-header">
-            <strong className="card-title">Utilisateurs</strong>
+      <div className="card-header">
+        <strong className="card-title">Utilisateurs</strong>
+      </div>
+      <div className="card-body">
+        <table id="bootstrap-data-table" className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Actions</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            {users.map(item =>
+              <tr>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.contact}</td>
+                <td class="badge badge-success">{item.state}</td>
+
+                <td>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => remove(e, users.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+
+
+              </tr>
+
+
+            )}
+
+
+
+
+            <tr>
+              <td>Nathalie David</td>
+              <td>NathalieDavid@armyspy.com</td>
+              <td>02.08.57.72.09</td>
+              <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+                <button type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+
+            </tr>
+            <tr>
+              <td>Moore Therrien</td>
+              <td>MooreTherrien@teleworm.us</td>
+              <td>04.08.67.54.099</td>
+              <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+                <button type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+
+            </tr>
+            <tr>
+              <td>Adélaïde Brisette</td>
+              <td>AdelaideBrisette@armyspy.com</td>
+              <td>04.90.74.53.53</td>
+              <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+                <button type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+
+            </tr>
+
+          </tbody>
+          <tfoot><tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Actions</th>
+
+          </tr></tfoot>
+        </table>
+        <button data-toggle="modal" data-target="#addUser" type="button" className="btn btn-success btn-sm">Ajouter</button>
+
+        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <AddUser />
+              </div>
+              <div class="modal-footer">
+                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="card-body">
-            <table id="bootstrap-data-table" className="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Téléphone</th>
-                        <th>Actions</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nathalie David</td>
-                        <td>NathalieDavid@armyspy.com</td>
-                        <td>02.08.57.72.09</td>
-                        <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-              <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+        <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
 
-                    </tr>
-                    <tr>
-                        <td>Moore Therrien</td>
-                        <td>MooreTherrien@teleworm.us</td>
-                        <td>04.08.67.54.099</td>
-                        <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-              <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    </tr>
-                    <tr>
-                        <td>Adélaïde Brisette</td>
-                        <td>AdelaideBrisette@armyspy.com</td>
-                        <td>04.90.74.53.53</td>
-                        <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-              <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-              <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
-
-                    </tr>
-
-                </tbody>
-                <tfoot><tr>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Téléphone</th>
-                        <th>Actions</th>
-
-                    </tr></tfoot>
-            </table>
-            <button  data-toggle="modal" data-target="#addUser"  type="button" className="btn btn-success btn-sm">Ajouter</button>
-
-            <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              </div>
             </div>
-            <div class="modal-body">
-              <AddUser/>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              
+          </div>
+        </div>
+
+        <div class="modal fade" id="viewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Voir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="viewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-        </div>
     </div>
-)};
+  )
+};
 
 User.propTypes = {};
 
