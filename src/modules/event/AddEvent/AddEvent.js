@@ -56,10 +56,10 @@ const AddEvent = () => {
           <div class="col-sm-9 ">
             <select onChange={handleInputChange} value={event.category_name} ref={register({ required: true })}
               name="category_name" class="form-control">
-              <option value="8"> FÊTES AMUSANTES </option>
-              <option value="10"> JEU JOUÉ </option>
-              <option value="12"> TASSE DE CAFÉ </option>
-              <option value="13"> FILMS REGARDÉS </option>
+              <option value="FÊTES AMUSANTES"> FÊTES AMUSANTES </option>
+              <option value="JEU JOUÉ"> JEU JOUÉ </option>
+              <option value="TASSE DE CAFÉ"> TASSE DE CAFÉ </option>
+              <option value="FILMS REGARDÉS"> FILMS REGARDÉS </option>
             </select>
             <div className="error text-danger">
               {errors.category_name && eventValidation.category_name}

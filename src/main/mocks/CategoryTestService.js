@@ -1,4 +1,5 @@
-const _category = []
+const _category = [{ "category_name": "Conférence et congrès", "category_image": "images/conference.png" },
+{ "category_name": "Séminaire", "category_image": "images/seminar.png" }]
 
 const getAll = () => {
     return _category;

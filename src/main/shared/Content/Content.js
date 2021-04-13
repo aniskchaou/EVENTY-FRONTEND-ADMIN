@@ -11,26 +11,33 @@ import Reservation from '../../../modules/reservation/Reservation/Reservation';
 import Category from '../../../modules/category/Category/Category';
 import User from '../../../modules/user/User/User';
 import Sponsor from '../../../modules/sponsors/Sponsor/Sponsor';
+import Constant from '../../configs/user';
+import AddSponsor from '../../../modules/sponsors/AddSponsor/AddSponsor';
+import AddEvent from '../../../modules/event/AddEvent/AddEvent';
+import AddCategory from '../../../modules/category/AddCategory/AddCategory';
 
 
 const Content = () => (
-  <div className="col-md-12">
-    
-        <div>
-        <Route exact path="/" component={Dashbord} />
-        <Route exact path="/dashboard" component={Dashbord} />
-          <Route exact path="/event" component={Eventt} />
-          <Route exact path="/reservation" component={Reservation} />
-          <Route exact path="/category" component={Category} />
-          <Route exact path="/user" component={User} />
-          <Route exact path="/sponsor" component={Sponsor} />
-          <Route exact path="/configuration" component={Configuration} />
-         
-          
-        </div>
-      
-   
-</div>
+  <div className="col-md-12" style={{ display: (Constant.CONNECTED_USER ? 'block' : 'none') }}>
+
+    <div>
+      <Route exact path="/" component={Dashbord} />
+      <Route exact path="/dashboard" component={Dashbord} />
+      <Route exact path="/event" component={Eventt} />
+      <Route exact path="/reservation" component={Reservation} />
+      <Route exact path="/category" component={Category} />
+      <Route exact path="/user" component={User} />
+      <Route exact path="/sponsor" component={Sponsor} />
+      <Route exact path="/configuration" component={Configuration} />
+      <Route exact path="/add-sponsor" component={AddSponsor} />
+      <Route exact path="/add-event" component={AddEvent} />
+      <Route exact path="/add-category" component={AddCategory} />
+
+
+    </div>
+
+
+  </div>
 );
 
 Content.propTypes = {};

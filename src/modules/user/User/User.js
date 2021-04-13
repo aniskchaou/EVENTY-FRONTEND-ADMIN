@@ -7,6 +7,7 @@ import showMessage from '../../../libraries/messages/messages';
 import userMessage from '../../../main/messages/userMessage';
 import UserTestService from '../../../main/mocks/UserTestService';
 import HTTPService from '../../../main/services/HTTPService';
+import EditUser from '../EditUser/EditUser';
 
 
 const deleteTask = () => {
@@ -89,59 +90,21 @@ const User = () => {
               <th>Email</th>
               <th>Téléphone</th>
               <th>Actions</th>
-
             </tr>
           </thead>
           <tbody>
-
             {users.map(item =>
               <tr>
-                <td>{item.name}</td>
+                <td>{item.username}</td>
                 <td>{item.email}</td>
                 <td>{item.contact}</td>
                 <td class="badge badge-success">{item.state}</td>
 
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => remove(e, users.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-
-
               </tr>
-
-
             )}
-
-
-
-
-            <tr>
-              <td>Nathalie David</td>
-              <td>NathalieDavid@armyspy.com</td>
-              <td>02.08.57.72.09</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
-
-            </tr>
-            <tr>
-              <td>Moore Therrien</td>
-              <td>MooreTherrien@teleworm.us</td>
-              <td>04.08.67.54.099</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
-
-            </tr>
-            <tr>
-              <td>Adélaïde Brisette</td>
-              <td>AdelaideBrisette@armyspy.com</td>
-              <td>04.90.74.53.53</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
-
-            </tr>
-
           </tbody>
           <tfoot><tr>
             <th>Nom</th>
@@ -183,7 +146,7 @@ const User = () => {
                 </button>
               </div>
               <div class="modal-body">
-
+                <EditUser user={updatedItem} />
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

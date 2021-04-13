@@ -8,7 +8,8 @@ import showMessage from '../../../libraries/messages/messages';
 import eventMessage from '../../../main/messages/eventMessage';
 import EventTestService from '../../../main/mocks/EventTestService';
 import HTTPService from '../../../main/services/HTTPService';
-
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 const deleteTask = () => {
   return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
@@ -85,10 +86,9 @@ const Eventt = () => {
           <thead>
             <tr>
               <th>Categorie</th>
-              <th>Auteur</th>
+              <th>Description</th>
               <th>Nom</th>
-
-              <th>statut</th>
+              <th>Date</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -99,39 +99,13 @@ const Eventt = () => {
                 <td>{item.category_name}</td>
                 <td>{item.event_description}</td>
                 <td>{item.event_name}</td>
-                <td className="badge badge-warning" >en attente</td>
+                <td><span className="badge badge-info">{item.event_start_date}</span></td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editEvent" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => remove(e, events.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-
-
               </tr>
-
-
             )}
 
-
-            <tr>
-              <td>Culture</td>
-              <td>Nathalie David</td>
-              <td>La Fête du Citron</td>
-
-              <td className="badge badge-success">Ouvert</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewTask" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
-
-            <tr>
-              <td>Culture</td>
-              <td>Saville Bussière</td>
-              <td>La Saint-Vincent Tournante</td>
-
-              <td className="badge badge-danger">Fermé</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewTask" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
 
           </tbody>
           <tfoot><tr>
@@ -143,6 +117,21 @@ const Eventt = () => {
           </tr></tfoot>
         </table>
         <button type="button" data-toggle="modal" data-target="#addTask" className="btn btn-success btn-sm">Ajouter</button>
+
+
+        <FullCalendar
+          plugins={[dayGridPlugin]}
+          initialView="dayGridMonth"
+          weekends={false}
+          events={[
+            { title: 'Entretien developpeur mobile', date: '2021-03-19' },
+            { title: 'event 2', date: '2019-04-02' }
+          ]}
+        />
+
+
+
+
 
         <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -164,7 +153,7 @@ const Eventt = () => {
           </div>
         </div>
 
-        <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="editEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -174,7 +163,7 @@ const Eventt = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditEvent />
+                <EditEvent event={updatedItem} />
               </div>
               <div class="modal-footer">
                 <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -194,7 +183,7 @@ const Eventt = () => {
                 </button>
               </div>
               <div class="modal-body">
-
+                <EditEvent event={updatedItem} />
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

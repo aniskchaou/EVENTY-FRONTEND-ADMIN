@@ -1,4 +1,7 @@
-const _event = []
+const _event = [{
+    "category_name": "Culture", "event_name": "La Fête du Citron", "event_description":
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s", "event_start_date": "12/1/2020"
+}]
 
 const getAll = () => {
     return _event;

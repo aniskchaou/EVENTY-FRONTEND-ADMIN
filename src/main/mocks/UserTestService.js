@@ -1,4 +1,5 @@
-const _user = []
+const _user = [{ "username": "Nathalie David", "email": "NathalieDavid@armyspy.com", "password": "", "contact": "02.08.57.72.09" }]
+
 
 const getAll = () => {
     return _user;
