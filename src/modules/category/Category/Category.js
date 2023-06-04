@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Category.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditCategory from '../EditCategory/EditCategory';
@@ -8,7 +8,7 @@ import showMessage from '../../../libraries/messages/messages';
 import categoryMessage from '../../../main/messages/categoryMessage';
 import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import HTTPService from '../../../main/services/HTTPService';
-
+import categoryHTTPService from '../../../main/services/categoryHTTPService';
 
 
 const deleteTask = () => {
@@ -19,16 +19,19 @@ const Category = () => {
   const [categorys, setCategorys] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonAdd = useRef(null);
+  const closeButtonEdit = useRef(null);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveCategorys()
+    //retrieveCategorys()
+    getAll()
   }, []);
 
 
   const getAll = () => {
-    HTTPService.getAll()
+    categoryHTTPService.getAll()
       .then(response => {
         setCategorys(response.data);
       })
@@ -63,10 +66,14 @@ const Category = () => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', categoryMessage.delete, 'success')
-      CategoryTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      // showMessage('Confirmation', categoryMessage.delete, 'success')
+      // CategoryTestService.remove(data)
+      // //removeOne(data)
+      // resfresh()
+      categoryHTTPService.remove(data.id).then(() => {
+        getAll()
+        showMessage('Confirmation', categoryMessage.delete, 'success')
+      })
     }
 
   }
@@ -74,57 +81,63 @@ const Category = () => {
   const update = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
+  }
+
+  const closeModalAdd = (data) => {
+    getAll()
+    closeButtonAdd.current.click()
+  }
+
+  const closeModalEdit = (data) => {
+    getAll()
+    closeButtonEdit.current.click()
   }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Catégories</strong>
+        <strong className="card-title"><i class="menu-icon fa fa-magic"></i> Categories</strong>
       </div>
       <div className="card-body">
+        <button data-toggle="modal" data-target="#addCategory" type="button" className="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Create</button>
         <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom</th>
-              <th>Description</th>
+              <th>Name</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {categorys.map(item =>
               <tr>
-                <td>{item.category_name}</td>
-                <td><img src={item.category_image} width="80" height="80" /></td>
+                <td>{item.name}</td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, categorys.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => remove(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
           <tfoot><tr>
             <th>Nom</th>
-            <th>Description</th>
             <th>Actions</th>
           </tr></tfoot>
 
         </table>
-        <button data-toggle="modal" data-target="#addCategory" type="button" className="btn btn-success btn-sm">Ajouter</button>
 
         <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddCategory />
+                <AddCategory closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onClick={resfresh} ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -141,10 +154,10 @@ const Category = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditCategory category={updatedItem} />
+                <EditCategory category={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

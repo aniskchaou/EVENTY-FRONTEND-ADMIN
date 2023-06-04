@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useInsertionEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Sponsor.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
@@ -9,20 +9,34 @@ import HTTPService from '../../../main/services/HTTPService';
 import sponsorMessage from '../../../main/messages/sponsorMessage';
 import EditSponor from '../EditSponsor/EditSponsor'
 import AddSponsor from '../AddSponsor/AddSponsor';
+import sponserHTTPService from '../../../main/services/sponserHTTPService';
+
 const Sponsor = () => {
   const [sponsors, setSponsors] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
-
+  const closeButtonAdd = useRef(null);
+  const closeButtonEdit = useRef(null);
 
   useEffect(() => {
     LoadJS()
-    retrieveSponsors()
+    // retrieveSponsors()
+    getAll()
   }, []);
+
+  const closeModalAdd = (data) => {
+    getAll()
+    closeButtonAdd.current.click()
+  }
+
+  const closeModalEdit = (data) => {
+    getAll()
+    closeButtonEdit.current.click()
+  }
 
 
   const getAll = () => {
-    HTTPService.getAll()
+    sponserHTTPService.getAll()
       .then(response => {
         setSponsors(response.data);
       })
@@ -55,67 +69,79 @@ const Sponsor = () => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', sponsorMessage.delete, 'success')
-      SponsorTestService.remove(data)
-      resfresh()
+      /* showMessage('Confirmation', sponsorMessage.delete, 'success')
+      SponsorTestService.remove(data) */
+      sponserHTTPService.remove(data.id).then(() => {
+        showMessage('Confirmation', sponsorMessage.delete, 'success')
+        getAll()
+      })
+
     }
 
   }
 
+
+
   const update = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
   }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Catégories</strong>
+        <strong className="card-title"><i class="menu-icon fa fa-phone"></i> Sponsors</strong>
       </div>
       <div className="card-body">
+        <button data-toggle="modal" data-target="#addSponsor" type="button" className="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Create</button>
+
         <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom</th>
-              <th>Image</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Website</th>
+              <th>Telephone</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {sponsors.map(item =>
               <tr>
-                <td>{item.sponsor_name}</td>
-                <td><img src={item.sponsor_image} width="80" height="80" /></td>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.website}</td>
+                <td>{item.telephone}</td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editSponsor" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, sponsors.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => remove(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
           <tfoot><tr>
-            <th>Nom</th>
-            <th>Description</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>telephone</th>
             <th>Actions</th>
           </tr></tfoot>
 
         </table>
-        <button data-toggle="modal" data-target="#addSponsor" type="button" className="btn btn-success btn-sm">Ajouter</button>
 
         <div class="modal fade" id="addSponsor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddSponsor />
+                <AddSponsor closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -132,10 +158,10 @@ const Sponsor = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditSponor sponsor={updatedItem} />
+                <EditSponor sponsor={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

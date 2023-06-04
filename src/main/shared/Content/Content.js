@@ -15,6 +15,8 @@ import Constant from '../../configs/user';
 import AddSponsor from '../../../modules/sponsors/AddSponsor/AddSponsor';
 import AddEvent from '../../../modules/event/AddEvent/AddEvent';
 import AddCategory from '../../../modules/category/AddCategory/AddCategory';
+import Organiser from '../../../modules/organiser/Organiser/Organiser';
+import Message from '../../../modules/message/Message/Message';
 
 
 const Content = () => (
@@ -32,8 +34,8 @@ const Content = () => (
       <Route exact path="/add-sponsor" component={AddSponsor} />
       <Route exact path="/add-event" component={AddEvent} />
       <Route exact path="/add-category" component={AddCategory} />
-
-
+      <Route exact path="/organiser" component={Organiser} />
+      <Route exact path="/message" component={Message} />
     </div>
 
 

@@ -6,28 +6,41 @@ import categoryMessage from '../../../main/messages/categoryMessage'
 import categoryValidation from '../../../main/validations/categoryValidation'
 import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import HTTPService from '../../../main/services/HTTPService';
+import categoryHTTPService from '../../../main/services/categoryHTTPService';
 
-const AddCategory = () => {
+const AddCategory = (props) => {
 
   const initialState = {
-    category_name: "",
-    category_image: "",
+    name: "",
+    description: ""
 
   };
 
   const { register, handleSubmit, errors } = useForm()
   const [category, setCategory] = useState(initialState);
 
+
   const onSubmit = (data) => {
     //saveCategory(data)
-    CategoryTestService.create(data)
+    /* CategoryTestService.create(data)
     setCategory(initialState)
-    showMessage('Confirmation', categoryMessage.add, 'success')
+    showMessage('Confirmation', categoryMessage.add, 'success') */
+
+    categoryHTTPService.create(data)
+      .then(response => {
+        setCategory(initialState)
+        props.closeModal()
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
+
+
 
   const saveCategory = (data) => {
 
-    HTTPService.create(data)
+    categoryHTTPService.create(data)
       .then(response => {
         setCategory(initialState)
       })
@@ -50,11 +63,11 @@ const AddCategory = () => {
 
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-            <font  ><font  > Nom de catégorie </font></font></label>
-          <div class="col-sm-9">
-            <input onChange={handleInputChange} value={category.category_name}
+            <font  ><font  > Name </font></font></label>
+          <div class="col-sm-12">
+            <input onChange={handleInputChange} value={category.name}
               ref={register({ required: true })}
-              type="text" name="category_name" id="form-field-1" placeholder="Nom de catégorie"
+              type="text" name="name" id="form-field-1" placeholder="Name"
               class="form-control" />
             <div className="error text-danger">
               {errors.category_name && categoryValidation.category_name}
@@ -63,12 +76,12 @@ const AddCategory = () => {
         </div>
 
         <div class="form-group">
-          <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"><font  ><font  > Image de la catégorie </font></font></label>
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"><font  ><font  > Description</font></font></label>
           <div class="form-group">
-            <div class="col-sm-9">
-              <input onChange={handleInputChange} value={category.category_image}
+            <div class="col-sm-12">
+              <input onChange={handleInputChange} value={category.description}
                 ref={register({ required: false })}
-                multiple="" type="file" class="form-control" name="category_image" id="id-input-file-3" />
+                multiple="" type="text" class="form-control" name="description" id="id-input-file-3" />
               <div className="error text-danger">
                 {errors.category_image && categoryValidation.category_image}
               </div>
@@ -76,15 +89,13 @@ const AddCategory = () => {
           </div>
         </div>
 
-        <br />
-        <br />
 
         <div class="clearfix form-actions">
           <div class="col-md-offset-3 col-md-9">
             <button type="submit" name="submit" class="btn btn-info">
               <i class="ace-icon fa fa-check bigger-110"></i><font  ><font  >
-                Sauvegarder
-											</font></font></button>
+                Save
+              </font></font></button>
           </div>
         </div>
 

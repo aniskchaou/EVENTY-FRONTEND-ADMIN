@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Eventt.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditEvent from '../EditEvent/EditEvent';
@@ -10,24 +10,27 @@ import EventTestService from '../../../main/mocks/EventTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+
+import eventHTTPService from '../../../main/services/eventHTTPService';
 const deleteTask = () => {
   return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
-
 const Eventt = () => {
   const [events, setEvents] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
-
+  const closeButtonAdd = useRef(null);
+  const closeButtonEdit = useRef(null);
 
   useEffect(() => {
     LoadJS()
-    retrieveEvents()
+    //retrieveEvents()
+    getAll()
   }, []);
 
 
   const getAll = () => {
-    HTTPService.getAll()
+    eventHTTPService.getAll()
       .then(response => {
         setEvents(response.data);
       })
@@ -60,12 +63,14 @@ const Eventt = () => {
 
   const remove = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure ?");
     if (r) {
       showMessage('Confirmation', eventMessage.delete, 'success')
-      EventTestService.remove(data)
+      eventHTTPService.remove(data.id).then(() => {
+        getAll()
+      })
       //removeOne(data)
-      resfresh()
+
     }
 
   }
@@ -73,22 +78,35 @@ const Eventt = () => {
   const update = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
+  }
+
+  const closeModalAdd = (data) => {
+    getAll()
+    closeButtonAdd.current.click()
+  }
+
+  const closeModalEdit = (data) => {
+    getAll()
+    closeButtonEdit.current.click()
   }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Evenements</strong>
+        <strong className="card-title"><i class="menu-icon fa fa-calendar-alt"></i> Events</strong>
       </div>
       <div className="card-body">
+        <button type="button" data-toggle="modal" data-target="#addTask" className="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Create</button>
+
         <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Categorie</th>
-              <th>Description</th>
-              <th>Nom</th>
+              <th>Organiser</th>
+              <th>Event Name</th>
               <th>Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Sponsor</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,57 +114,45 @@ const Eventt = () => {
 
             {events.map(item =>
               <tr>
-                <td>{item.category_name}</td>
-                <td>{item.event_description}</td>
-                <td>{item.event_name}</td>
-                <td><span className="badge badge-info">{item.event_start_date}</span></td>
+                <td>{item.organiser}</td>
+                <td>{item.name}</td>
+                <td>{item.date}</td>
+                <td>{item.start}</td>
+                <td>{item.end}</td>
+                <td><span className="badge badge-info">{item.sponsor}</span></td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editEvent" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, events.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => remove(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
 
 
           </tbody>
           <tfoot><tr>
-            <th>Categorie</th>
-            <th>Auteur</th>
-            <th>Nom</th>
-            <th>statut</th>
+            <th>Organiser</th>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Sponsor</th>
             <th>Actions</th>
           </tr></tfoot>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addTask" className="btn btn-success btn-sm">Ajouter</button>
-
-
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          weekends={false}
-          events={[
-            { title: 'Entretien developpeur mobile', date: '2021-03-19' },
-            { title: 'event 2', date: '2019-04-02' }
-          ]}
-        />
-
-
-
-
 
         <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddEvent />
+                <AddEvent closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -163,10 +169,10 @@ const Eventt = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditEvent event={updatedItem} />
+                <EditEvent event={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

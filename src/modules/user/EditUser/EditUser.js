@@ -6,6 +6,7 @@ import UserTestService from '../../../main/mocks/UserTestService';
 import userMessage from '../../../main/messages/userMessage';
 import userValidation from '../../../main/validations/userValidation';
 import showMessage from '../../../libraries/messages/messages';
+import userHTTPService from '../../../main/services/userHTTPService';
 
 const EditUser = (props) => {
   const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -17,9 +18,14 @@ const EditUser = (props) => {
 
 
   const onSubmit = (data) => {
+    console.log(data)
 
-    UserTestService.update(props.user, data)
-    showMessage('Confirmation', userMessage.edit, 'success')
+    /*  UserTestService.update(props.user, data)
+     showMessage('Confirmation', userMessage.edit, 'success') */
+    userHTTPService.update(props.user.id, data).then(data => {
+      showMessage('Confirmation', userMessage.edit, 'success')
+      props.closeModal()
+    })
   }
 
   const handleInputChange = event => {
@@ -33,10 +39,10 @@ const EditUser = (props) => {
 
 
         <div class="form-group">
-          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > Nom d'utilisateur </font></font></label>
-          <div class="col-sm-9">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > Username </font></font></label>
+          <div class="col-sm-12">
             <input onChange={handleInputChange} value={user.username} ref={register({ required: true })}
-              type="text" name="username" id="form-field-1" placeholder="Nom d'utilisateur" class=" form-control" />
+              type="text" name="username" id="form-field-1" placeholder="Username" class=" form-control" />
             <div className="error text-danger">
               {errors.username && userValidation.username}
             </div>
@@ -44,10 +50,21 @@ const EditUser = (props) => {
         </div>
 
         <div class="form-group">
-          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > Mot de passe</font></font></label>
-          <div class="col-sm-9">
-            <input onChange={handleInputChange} value={user.password} ref={register({ required: true })}
-              type="text" name="password" id="form-field-1" placeholder="Mot de passe" class=" form-control" />
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > FirstName</font></font></label>
+          <div class="col-sm-12">
+            <input onChange={handleInputChange} value={user.firstName} ref={register({ required: true })}
+              type="text" name="firstName" id="form-field-1" placeholder="FirstName" class=" form-control" />
+            <div className="error text-danger">
+              {errors.password && userValidation.password}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > LastNme</font></font></label>
+          <div class="col-sm-12">
+            <input onChange={handleInputChange} value={user.lastNme} ref={register({ required: true })}
+              type="text" name="lastNme" id="form-field-1" placeholder="LastName" class=" form-control" />
             <div className="error text-danger">
               {errors.password && userValidation.password}
             </div>
@@ -55,11 +72,12 @@ const EditUser = (props) => {
         </div>
 
 
+
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > Email</font></font></label>
-          <div class="col-sm-9">
+          <div class="col-sm-12">
             <input onChange={handleInputChange} value={user.email} ref={register({ required: true })}
-              type="text" name="email" id="form-field-1" placeholder="Email Id" class=" form-control" />
+              type="text" name="email" id="form-field-1" placeholder="Email" class=" form-control" />
             <div className="error text-danger">
               {errors.email && userValidation.email}
             </div>
@@ -69,10 +87,10 @@ const EditUser = (props) => {
 
 
         <div class="form-group">
-          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > Contact</font></font></label>
-          <div class="col-sm-9">
-            <input onChange={handleInputChange} value={user.contact} ref={register({ required: true })}
-              type="text" name="contact" id="form-field-1" placeholder="Numéro de contact" class=" form-control" />
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > Telephone</font></font></label>
+          <div class="col-sm-12">
+            <input onChange={handleInputChange} value={user.telephone} ref={register({ required: true })}
+              type="text" name="telephone" id="form-field-1" placeholder="Telephone" class=" form-control" />
             <div className="error text-danger">
               {errors.contact && userValidation.contact}
             </div>
@@ -83,7 +101,7 @@ const EditUser = (props) => {
         <div class="clearfix form-actions">
           <div class="col-md-offset-3 col-md-9">
             <button type="submit" name="submit" class="btn btn-info">
-              <i class="ace-icon fa fa-check bigger-110"></i><font  ><font  > Sauvegarder
+              <i class="ace-icon fa fa-check bigger-110"></i><font  ><font  > Save
               </font></font></button>
 
           </div>

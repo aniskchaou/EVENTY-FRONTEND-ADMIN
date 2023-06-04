@@ -6,6 +6,7 @@ import showMessage from '../../../libraries/messages/messages';
 import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import categoryMessage from '../../../main/messages/categoryMessage';
 import categoryValidation from '../../../main/validations/categoryValidation'
+import categoryHTTPService from '../../../main/services/categoryHTTPService';
 
 const EditCategory = (props) => {
   const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -18,8 +19,11 @@ const EditCategory = (props) => {
 
   const onSubmit = (data) => {
 
-    CategoryTestService.update(props.category, data)
-    showMessage('Confirmation', categoryMessage.edit, 'success')
+    categoryHTTPService.update(props.category.id, data).then(data => {
+      showMessage('Confirmation', categoryMessage.edit, 'success')
+      props.closeModal()
+    })
+
   }
 
   const handleInputChange = event => {
@@ -34,11 +38,11 @@ const EditCategory = (props) => {
 
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-            <font  ><font  > Nom de catégorie </font></font></label>
-          <div class="col-sm-9">
-            <input onChange={handleInputChange} value={category.category_name}
+            <font  ><font  > Name </font></font></label>
+          <div class="col-sm-12">
+            <input onChange={handleInputChange} value={category.name}
               ref={register({ required: true })}
-              type="text" name="category_name" id="form-field-1" placeholder="Nom de catégorie"
+              type="text" name="name" id="form-field-1" placeholder="Name"
               class="form-control" />
             <div className="error text-danger">
               {errors.category_name && categoryValidation.category_name}
@@ -47,12 +51,12 @@ const EditCategory = (props) => {
         </div>
 
         <div class="form-group">
-          <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"><font  ><font  > Image de la catégorie </font></font></label>
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"><font  ><font  > Description</font></font></label>
           <div class="form-group">
-            <div class="col-sm-9">
-              <input onChange={handleInputChange}
+            <div class="col-sm-12">
+              <input onChange={handleInputChange} value={category.description}
                 ref={register({ required: false })}
-                multiple="" type="file" class="form-control" name="category_image" id="id-input-file-3" />
+                multiple="" type="text" class="form-control" name="description" id="id-input-file-3" />
               <div className="error text-danger">
                 {errors.category_image && categoryValidation.category_image}
               </div>
@@ -60,15 +64,13 @@ const EditCategory = (props) => {
           </div>
         </div>
 
-        <br />
-        <br />
 
         <div class="clearfix form-actions">
           <div class="col-md-offset-3 col-md-9">
             <button type="submit" name="submit" class="btn btn-info">
               <i class="ace-icon fa fa-check bigger-110"></i><font  ><font  >
-                Sauvegarder
-											</font></font></button>
+                Save
+              </font></font></button>
           </div>
         </div>
 

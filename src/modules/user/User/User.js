@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './User.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import AddUser from '../AddUser/AddUser';
@@ -8,7 +8,7 @@ import userMessage from '../../../main/messages/userMessage';
 import UserTestService from '../../../main/mocks/UserTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import EditUser from '../EditUser/EditUser';
-
+import userHTTPService from '../../../main/services/userHTTPService';
 
 const deleteTask = () => {
   return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
@@ -19,16 +19,18 @@ const User = () => {
   const [users, setUsers] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonAdd = useRef(null);
+  const closeButtonEdit = useRef(null);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveUsers()
+    getAll()
   }, []);
 
 
   const getAll = () => {
-    HTTPService.getAll()
+    userHTTPService.getAll()
       .then(response => {
         setUsers(response.data);
       })
@@ -54,41 +56,52 @@ const User = () => {
     setUsers(users);
   };
 
-  const resfresh = () => {
-    retrieveUsers()
-    forceUpdate()
-  }
+
 
   const remove = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure ?");
     if (r) {
-      showMessage('Confirmation', userMessage.delete, 'success')
-      UserTestService.remove(data)
+      /*  showMessage('Confirmation', userMessage.delete, 'success')
+       UserTestService.remove(data) */
+      userHTTPService.remove(data.id).then(() => {
+        getAll()
+      })
       //removeOne(data)
-      resfresh()
+      //resfresh()
     }
 
+  }
+
+  const closeModalEdit = (data) => {
+    getAll()
+    closeButtonEdit.current.click()
   }
 
   const update = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
+  }
+
+  const closeModalAdd = (data) => {
+    getAll()
+    closeButtonAdd.current.click()
   }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Utilisateurs</strong>
+        <strong className="card-title"><i class="menu-icon fa fa-users"></i> Users</strong>
       </div>
       <div className="card-body">
         <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom</th>
+              <th>Username</th>
+              <th>First Name</th>
+              <th>Last Name</th>
               <th>Email</th>
-              <th>Téléphone</th>
+              <th>Telephone</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,25 +109,27 @@ const User = () => {
             {users.map(item =>
               <tr>
                 <td>{item.username}</td>
+                <td>{item.firstName}</td>
+                <td>{item.lastNme}</td>
                 <td>{item.email}</td>
-                <td>{item.contact}</td>
-                <td class="badge badge-success">{item.state}</td>
-
+                <td>{item.telephone}</td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editUser" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, users.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => remove(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
           <tfoot><tr>
-            <th>Nom</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
-            <th>Téléphone</th>
+            <th>Telephone</th>
             <th>Actions</th>
 
           </tr></tfoot>
         </table>
-        <button data-toggle="modal" data-target="#addUser" type="button" className="btn btn-success btn-sm">Ajouter</button>
+        <button data-toggle="modal" data-target="#addUser" type="button" className="btn btn-success btn-sm">Create</button>
 
         <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -126,10 +141,10 @@ const User = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <AddUser />
+                <AddUser closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -146,10 +161,10 @@ const User = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditUser user={updatedItem} />
+                <EditUser user={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

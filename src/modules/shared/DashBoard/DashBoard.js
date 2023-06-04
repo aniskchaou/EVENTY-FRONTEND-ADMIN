@@ -1,16 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './DashBoard.css';
 //import { drawChart } from './../../../components/chart';
 import Eventt from './../../event/Eventt/Eventt';
 import { drawChart } from '../../../libraries/chart/chart';
+import bookingHTTPService from '../../../main/services/bookingHTTPService';
+import eventHTTPService from '../../../main/services/eventHTTPService';
+import organiserHTTPService from '../../../main/services/organiserHTTPService';
+import sponserHTTPService from '../../../main/services/sponserHTTPService';
 
 
 const DashBoard = () => {
+
+  const [bookings, setBookings] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [organisers, setOrganisers] = useState([]);
+  const [sponsers, setSponsers] = useState([]);
+
   useEffect(() => {
     // Runs ONCE after initial rendering
     drawChart()
+    bookingHTTPService.getCount().then(data => {
+      console.log(data.data)
+      setBookings(data.data.booking)
+    })
 
+    eventHTTPService.getCount().then(data => {
+      setEvents(data.data.event)
+    })
+
+    organiserHTTPService.getCount().then(data => {
+      setOrganisers(data.data.organiser)
+    })
+
+    sponserHTTPService.getCount().then(data => {
+      setSponsers(data.data.sponser)
+    })
   }, []);
 
 
@@ -27,9 +52,9 @@ const DashBoard = () => {
               <div className="stat-content">
                 <div className="text-left dib">
                   <div className="stat-text">
-                    <span className="count">2</span>
+                    <span className="count">{events}</span>
                   </div>
-                  <div className="stat-heading">Résérvations</div>
+                  <div className="stat-heading">Events</div>
                 </div>
               </div>
             </div>
@@ -47,9 +72,9 @@ const DashBoard = () => {
               <div className="stat-content">
                 <div className="text-left dib">
                   <div className="stat-text">
-                    <span className="count">2</span>
+                    <span className="count">{organisers}</span>
                   </div>
-                  <div className="stat-heading">Catégories</div>
+                  <div className="stat-heading">Organisers</div>
                 </div>
               </div>
             </div>
@@ -67,9 +92,9 @@ const DashBoard = () => {
               <div className="stat-content">
                 <div className="text-left dib">
                   <div className="stat-text">
-                    <span className="count">3</span>
+                    <span className="count">{bookings}</span>
                   </div>
-                  <div className="stat-heading">Utilisateurs</div>
+                  <div className="stat-heading">Bookings</div>
                 </div>
               </div>
             </div>
@@ -87,9 +112,9 @@ const DashBoard = () => {
               <div className="stat-content">
                 <div className="text-left dib">
                   <div className="stat-text">
-                    <span className="count">3</span>
+                    <span className="count">{sponsers}</span>
                   </div>
-                  <div className="stat-heading">Sponseurs</div>
+                  <div className="stat-heading">Sponsors</div>
                 </div>
               </div>
             </div>
@@ -99,7 +124,7 @@ const DashBoard = () => {
 
 
 
-      <div className="col-md-12">
+      {/*       <div className="col-md-12">
         <div className="row">
           <div className="col-md-6"> <div className="card">
             <div className="card-body">
@@ -120,10 +145,10 @@ const DashBoard = () => {
         </div>
 
 
-      </div>
+      </div> */}
       <div className="col-md-12">
 
-        <Eventt/>
+        <Eventt />
       </div>
 
 
