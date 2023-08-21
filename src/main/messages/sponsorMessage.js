@@ -1,7 +1,7 @@
 const sponsorMessage = {
-    add: 'sponseur  a été ajouté avec succés',
-    edit: 'sponseur  a été modifié avec succés',
-    delete: 'sponseur  a été supprimé avec succés'
+    add: 'Item has been added',
+    edit: 'Item has been modified',
+    delete: 'Item has been deleted '
 }
 
 export default sponsorMessage

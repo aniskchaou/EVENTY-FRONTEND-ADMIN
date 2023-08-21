@@ -67,7 +67,7 @@ const Sponsor = () => {
 
   const remove = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure you want to delete ?");
     if (r) {
       /* showMessage('Confirmation', sponsorMessage.delete, 'success')
       SponsorTestService.remove(data) */

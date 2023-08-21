@@ -94,12 +94,13 @@ const User = () => {
         <strong className="card-title"><i class="menu-icon fa fa-users"></i> Users</strong>
       </div>
       <div className="card-body">
+        <button data-toggle="modal" data-target="#addUser" type="button" className="btn btn-success btn-sm">Create</button>
+
         <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
             <tr>
               <th>Username</th>
               <th>First Name</th>
-              <th>Last Name</th>
               <th>Email</th>
               <th>Telephone</th>
               <th>Actions</th>
@@ -110,7 +111,6 @@ const User = () => {
               <tr>
                 <td>{item.username}</td>
                 <td>{item.firstName}</td>
-                <td>{item.lastNme}</td>
                 <td>{item.email}</td>
                 <td>{item.telephone}</td>
                 <td>
@@ -122,14 +122,12 @@ const User = () => {
           <tfoot><tr>
             <th>Username</th>
             <th>First Name</th>
-            <th>Last Name</th>
             <th>Email</th>
             <th>Telephone</th>
             <th>Actions</th>
 
           </tr></tfoot>
         </table>
-        <button data-toggle="modal" data-target="#addUser" type="button" className="btn btn-success btn-sm">Create</button>
 
         <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

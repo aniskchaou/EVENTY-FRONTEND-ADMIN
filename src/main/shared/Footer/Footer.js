@@ -13,7 +13,7 @@ const Footer = () => (
           Developed by Delta Dev Software
         </div>
         <div className="col-sm-6 text-right">
-          Designed by <a href="https://colorlib.com">Colorlib</a>
+
         </div>
       </div>
     </div>

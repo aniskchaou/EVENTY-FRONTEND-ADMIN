@@ -4,19 +4,21 @@ import './Header.css';
 import { Link, NavLink, useHistory } from 'react-router-dom';
 import Constant from '../../configs/user';
 
-const Header = (props) => {
+const Header = ({ handleClick }) => {
+
+
+
     let history = useHistory()
 
 
     const logout = () => {
-        props.rerender();
-        Constant.CONNECTED_USER = false
+        handleClick(false)
+        localStorage.clear()
         history.push("/login")
     }
 
-
     return (
-        <div id="right-panel" className="right-panel" style={{ display: (Constant.CONNECTED_USER ? 'block' : 'none') }}>
+        <div id="right-panel" className="right-panel" >
             <header id="header" className="header">
                 <div className="top-left">
                     <div className="navbar-header">

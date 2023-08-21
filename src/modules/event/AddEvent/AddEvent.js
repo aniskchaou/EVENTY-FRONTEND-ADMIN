@@ -190,21 +190,21 @@ const AddEvent = (props) => {
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Price     </label>
           <div class="col-sm-12">
-            <input onChange={handleInputChange} value={event.name} ref={register({ required: true })}
+            <input onChange={handleInputChange} value={event.price} ref={register({ required: true })}
               type="text" name="price" id="form-field-1" placeholder="Name" class="form-control" />
             <div className="error text-danger">
-              {errors.event_name && eventValidation.event_name}
+
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  max     </label>
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">  Max Members     </label>
           <div class="col-sm-12">
-            <input onChange={handleInputChange} value={event.name} ref={register({ required: true })}
-              type="text" name="max" id="form-field-1" placeholder="Name" class="form-control" />
+            <input onChange={handleInputChange} value={event.max} ref={register({ required: true })}
+              type="text" name="max" id="form-field-1" placeholder="Max Members" class="form-control" />
             <div className="error text-danger">
-              {errors.event_name && eventValidation.event_name}
+
             </div>
           </div>
         </div>

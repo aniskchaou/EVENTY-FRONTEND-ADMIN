@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '../Navigation/Navigation';
 import Header from '../Header/Header';
 import Content from '../Content/Content';
@@ -10,56 +10,54 @@ import { useLocation } from 'react-router-dom'
 import User from '../../../modules/user/User/User';
 import Login from '../../../modules/Login/Login';
 
-class Root extends React.Component {
+const Root = () => {
 
 
-  constructor(props) {
-    super(props);
-    this.state = { connected: User.CONNECTED_USER };
-  }
-  rerender = () => {
-    this.forceUpdate();
-  };
-  forceUpdate = () => {
-    this.setState((state) => ({
-      connected: User.CONNECTED_USER
-    }));
+
+
+  const [connected, setConnected] = useState(false);
+
+
+  const handleClick = num => {
+    setConnected(num)
   };
 
-  render() {
 
 
 
-    return (
-      <div>
-        <Router>
-          <Navigation />
-          <Header rerender={this.rerender} />
+
+  return (
+    <div>
+      <Router>
+        {connected === true ?
+          <div> <Navigation handleClick={handleClick} />
+            <Header handleClick={handleClick} />
 
 
-          <div id="right-panel" className="right-panel">
+            <div id="right-panel" className="right-panel">
 
 
-            <div className="content">
-              <div className="animated fadeIn">
-                <div className="row">
+              <div className="content">
+                <div className="animated fadeIn">
+                  <div className="row">
 
-                  <Content />
+                    <Content handleClick={handleClick} />
 
 
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="clearfix"></div>
-            <Footer />
-            <Login rerender={this.rerender} />
+              <div className="clearfix"></div>
+              <Footer handleClick={handleClick} /></div></div> :
 
-          </div>
-        </Router>
-      </div>
-    );
-  }
+          <Login handleClick={handleClick} />}
+
+
+      </Router>
+    </div>
+  );
+
 }
 
 

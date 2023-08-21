@@ -107,6 +107,7 @@ const Eventt = () => {
               <th>Start</th>
               <th>End</th>
               <th>Sponsor</th>
+              <th>Price</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -120,6 +121,7 @@ const Eventt = () => {
                 <td>{item.start}</td>
                 <td>{item.end}</td>
                 <td><span className="badge badge-info">{item.sponsor}</span></td>
+                <td>${item.price}</td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editEvent" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => remove(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
@@ -135,6 +137,7 @@ const Eventt = () => {
             <th>Start</th>
             <th>End</th>
             <th>Sponsor</th>
+            <th>Price</th>
             <th>Actions</th>
           </tr></tfoot>
         </table>

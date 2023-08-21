@@ -29,6 +29,10 @@ const findByTitle = title => {
     return http.get(`${BASE_URL}/api/user?title=${title}`);
 };
 
+const login = data => {
+    return http.post(`${BASE_URL}/api/user/login`, data);
+};
+
 export default {
     getAll,
     get,
@@ -36,5 +40,6 @@ export default {
     update,
     remove,
     removeAll,
-    findByTitle
+    findByTitle,
+    login
 };

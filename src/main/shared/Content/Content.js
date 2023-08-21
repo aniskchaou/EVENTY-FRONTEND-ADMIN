@@ -20,7 +20,7 @@ import Message from '../../../modules/message/Message/Message';
 
 
 const Content = () => (
-  <div className="col-md-12" style={{ display: (Constant.CONNECTED_USER ? 'block' : 'none') }}>
+  <div className="col-md-12">
 
     <div>
       <Route exact path="/" component={Dashbord} />

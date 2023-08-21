@@ -15,7 +15,7 @@ const AddUser = (props) => {
     email: "",
     telephone: "",
     firstName: "",
-    lastNme: ""
+    lastName: ""
   };
 
   const { register, handleSubmit, errors } = useForm()
@@ -83,8 +83,8 @@ const AddUser = (props) => {
         <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1"><font  ><font  > LastNme</font></font></label>
           <div class="col-sm-12">
-            <input onChange={handleInputChange} value={user.lastNme} ref={register({ required: true })}
-              type="text" name="lastNme" id="form-field-1" placeholder="LastName" class=" form-control" />
+            <input onChange={handleInputChange} value={user.lastName} ref={register({ required: true })}
+              type="text" name="lastName" id="form-field-1" placeholder="LastName" class=" form-control" />
             <div className="error text-danger">
               {errors.password && userValidation.password}
             </div>
